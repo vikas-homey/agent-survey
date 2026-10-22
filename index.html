@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="6 questions from Homey. About 3 minutes.">
+<meta property="og:title" content="Quoting on your phone">
+<meta property="og:description" content="6 questions from Homey. About 3 minutes.">
+<meta name="theme-color" content="#5b21b6">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Quoting on Your Phone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap">
+<style>
+/* Layout: a storm-purple cover band with the Homey logotype, then one white survey card that overlaps it.
+   Results, for the owner only, sit below the card. Tokens follow Homey's app (primary violet, slate neutrals, Inter). */
+:root {
+  --page: #f8fafc;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --body: #334155;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --line: #e2e8f0;
+  --line-soft: #f1f5f9;
+  --hover: #f8fafc;
+  --brand: #7c3aed;
+  --brand-press: #6d28d9;
+  --brand-wash: #f5f3ff;
+  --brand-wash-2: #ede9fe;
+  --brand-ink: #5b21b6;
+  --on-brand: #ffffff;
+  --pass: #15803d; --pass-wash: #dcfce7;
+  --fail: #b91c1c; --fail-wash: #fee2e2;
+  --open: #a16207; --open-wash: #fef9c3;
+  --cover-a: #5b21b6;
+  --cover-b: #2e1065;
+  --cover-c: #221f20;
+  --cover-ink: #ffffff;
+  --cover-sub: #ddd6fe;
+  --focus: 0 0 0 3px rgba(124, 58, 237, .28);
+  --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 12px 32px -12px rgba(46, 16, 101, .18);
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0b0a12; --card: #15131f; --ink: #f8fafc; --body: #cbd5e1; --muted: #94a3b8; --faint: #64748b;
+    --line: #2a2738; --line-soft: #1e1b2b; --hover: #1c1a28;
+    --brand: #a78bfa; --brand-press: #c4b5fd; --brand-wash: #221a3d; --brand-wash-2: #2c2250; --brand-ink: #ddd6fe; --on-brand: #15131f;
+    --pass: #86efac; --pass-wash: #14301f; --fail: #fca5a5; --fail-wash: #3b1717; --open: #fde047; --open-wash: #33290b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -16px rgba(0, 0, 0, .6);
+    --focus: 0 0 0 3px rgba(167, 139, 250, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0b0a12; --card: #15131f; --ink: #f8fafc; --body: #cbd5e1; --muted: #94a3b8; --faint: #64748b;
+  --line: #2a2738; --line-soft: #1e1b2b; --hover: #1c1a28;
+  --brand: #a78bfa; --brand-press: #c4b5fd; --brand-wash: #221a3d; --brand-wash-2: #2c2250; --brand-ink: #ddd6fe; --on-brand: #15131f;
+  --pass: #86efac; --pass-wash: #14301f; --fail: #fca5a5; --fail-wash: #3b1717; --open: #fde047; --open-wash: #33290b;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -16px rgba(0, 0, 0, .6);
+  --focus: 0 0 0 3px rgba(167, 139, 250, .35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--page); color: var(--body); font-family: var(--font); font-size: 15px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased; font-feature-settings: "cv11", "ss01";
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card);
+}
+.gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Cover */
+.cover {
+  position: relative; overflow: hidden; color: var(--cover-ink);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(167, 139, 250, .35) 0%, rgba(167, 139, 250, 0) 55%),
+    linear-gradient(135deg, var(--cover-a) 0%, var(--cover-b) 55%, var(--cover-c) 100%);
+}
+.cover-inner { max-width: 640px; margin: 0 auto; padding-block: 36px 112px; position: relative; z-index: 1; display: grid; gap: 40px; }
+.cover .logo { width: 104px; height: auto; color: var(--cover-ink); display: block; }
+.cover h1 {
+  margin: 0; color: var(--cover-ink); font-size: clamp(32px, 7vw, 48px); line-height: 1.05; letter-spacing: -0.025em; font-weight: 700;
+  text-wrap: balance;
+}
+.cover .meta { margin: 14px 0 0; color: var(--cover-sub); font-size: 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.cover .meta i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .6; }
+.bolt {
+  position: absolute; right: -40px; bottom: -70px; width: 300px; height: auto; color: #7c3aed; opacity: .35; z-index: 0; pointer-events: none;
+}
+@media (max-width: 520px) { .bolt { width: 200px; right: -50px; bottom: -40px; opacity: .28; } }
+
+/* Card */
+.wrap { max-width: 640px; margin: -72px auto 0; position: relative; z-index: 2; display: grid; gap: 28px; padding-bottom: 56px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.progress {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--card); border-radius: 20px 20px 0 0; border-bottom: 1px solid var(--line-soft);
+  padding: 16px 28px; display: flex; align-items: center; gap: 14px;
+}
+.bar { flex: 1; height: 6px; border-radius: 999px; background: var(--line-soft); overflow: hidden; }
+.bar > span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--brand); transition: width .3s var(--ease); }
+.progress output { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+form { display: grid; }
+.block { padding: 28px; display: grid; gap: 16px; border-bottom: 1px solid var(--line-soft); min-width: 0; }
+fieldset.block { display: block; margin: 0; border-left: 0; border-right: 0; border-top: 0; }
+legend.qhead { display: flex; gap: 14px; align-items: flex-start; width: 100%; padding: 0; margin: 0 0 14px; }
+.num {
+  flex: none; width: 28px; height: 28px; border-radius: 6px; display: grid; place-items: center;
+  background: var(--brand-wash); color: var(--brand-ink); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.block.answered .num { background: var(--brand); color: var(--on-brand); }
+.qtitle { flex: 1; min-width: 0; color: var(--ink); font-size: 17px; line-height: 1.4; font-weight: 600; text-wrap: pretty; margin: 2px 0 0; }
+.qbody { display: grid; gap: 12px; padding-left: 42px; min-width: 0; }
+@media (max-width: 520px) {
+  .block { padding: 24px 20px; }
+  .progress { padding: 14px 20px; }
+  .qbody { padding-left: 0; }
+}
+
+.options { display: grid; gap: 8px; }
+@media (min-width: 521px) { .options.row { grid-template-columns: repeat(3, 1fr); } }
+.opt { position: relative; display: block; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt span {
+  display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 11px 14px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px; cursor: pointer; color: var(--body);
+  transition: background .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
+}
+.opt span::before {
+  content: ""; flex: none; width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--card);
+  transition: border-color .15s var(--ease), box-shadow .15s var(--ease), background .15s var(--ease);
+}
+.opt input[type="checkbox"] + span::before { border-radius: 5px; }
+.opt:hover span { background: var(--hover); }
+.opt input:checked + span { border-color: var(--brand); background: var(--brand-wash); color: var(--ink); font-weight: 500; }
+.opt input[type="radio"]:checked + span::before { border-color: var(--brand); box-shadow: inset 0 0 0 4px var(--brand); }
+.opt input[type="checkbox"]:checked + span::before {
+  border-color: var(--brand); background: var(--brand)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+.opt input:focus-visible + span { box-shadow: var(--focus); border-color: var(--brand); }
+
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > span { font-size: 13px; font-weight: 500; color: var(--muted); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .two { grid-template-columns: 1fr; } }
+input[type="text"], textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--card);
+  border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; min-height: 46px;
+  transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+input[type="text"]::placeholder, textarea::placeholder { color: var(--faint); }
+textarea { min-height: 96px; resize: vertical; }
+input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--brand); box-shadow: var(--focus); }
+
+.foot { padding: 24px 28px 28px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 520px) { .foot { padding: 20px; } .foot button { width: 100%; } }
+button {
+  font: inherit; font-weight: 600; font-size: 15px; min-height: 48px; padding: 0 28px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--brand); background: var(--brand); color: var(--on-brand);
+  transition: background .15s var(--ease), border-color .15s var(--ease);
+}
+button:hover { background: var(--brand-press); border-color: var(--brand-press); }
+button.secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+button.secondary:hover { background: var(--hover); border-color: var(--line); }
+button:focus-visible { outline: none; box-shadow: var(--focus); }
+button:disabled { opacity: .55; cursor: default; }
+.status { color: var(--muted); font-size: 14px; }
+.status.error { color: var(--fail); }
+
+/* Thanks */
+.thanks { padding: 40px 28px 32px; display: grid; gap: 20px; justify-items: start; }
+@media (max-width: 520px) { .thanks { padding: 32px 20px 24px; } }
+.tick { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-wash); color: var(--brand); }
+.tick svg { width: 26px; height: 26px; }
+.thanks h2 { margin: 0; color: var(--ink); font-size: 26px; letter-spacing: -0.02em; line-height: 1.15; }
+.thanks p { margin: 6px 0 0; max-width: 46ch; }
+pre.answers {
+  margin: 0; width: 100%; white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 14px; line-height: 1.65; color: var(--body);
+  background: var(--page); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+}
+.thanks .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; width: 100%; }
+@media (max-width: 520px) { .thanks .actions button { flex: 1 1 100%; } }
+
+/* Results (owner only) */
+.results { display: grid; gap: 14px; padding: 28px; }
+@media (max-width: 520px) { .results { padding: 24px 20px; } }
+.rhead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rhead h2 { margin: 0; color: var(--ink); font-size: 20px; letter-spacing: -0.01em; }
+.tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px; background: var(--brand-wash); color: var(--brand-ink);
+}
+.tally { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.trow { display: grid; grid-template-columns: 36px 1fr auto 64px; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); }
+.trow:last-child { border-bottom: 0; }
+.trow b { color: var(--ink); font-size: 13px; }
+.trow .q { min-width: 0; font-size: 14px; }
+.count { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); white-space: nowrap; font-size: 14px; }
+.chip { justify-self: end; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+.chip.pass { color: var(--pass); background: var(--pass-wash); }
+.chip.fail { color: var(--fail); background: var(--fail-wash); }
+.chip.open { color: var(--open); background: var(--open-wash); }
+@media (max-width: 520px) { .trow { grid-template-columns: 30px 1fr auto; } .trow .q { grid-column: 2 / -1; grid-row: 2; } }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+.responses { display: grid; gap: 10px; }
+.resp { border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; }
+.resp header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.resp .who { font-weight: 600; color: var(--ink); }
+.resp .when { color: var(--muted); font-size: 13px; }
+.resp dl { margin: 0; display: grid; grid-template-columns: minmax(0, 40%) 1fr; gap: 6px 14px; font-size: 14px; }
+.resp dt { color: var(--muted); }
+.resp dd { margin: 0; min-width: 0; overflow-wrap: anywhere; color: var(--body); }
+@media (max-width: 520px) { .resp dl { grid-template-columns: 1fr; gap: 2px; } .resp dd { margin-bottom: 8px; } }
+.empty { color: var(--muted); margin: 0; }
+
+footer.brand { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--faint); font-size: 13px; }
+footer.brand svg { width: 64px; height: auto; color: var(--faint); }
+
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="cover gutter">
+  <svg class="bolt" viewBox="0 0 400 621" fill="currentColor" aria-hidden="true"><path d="M395.309 330.652c-3.104-16.311-8.409-30.999-15.915-44.063-7.507-13.028-18.116-22.916-31.83-29.592-13.749-6.713-30.53-10.033-50.379-10.033-27.679 0-52.4 7.94-74.089 23.782-16.853 12.306-31.36 30.062-43.305 47.095L261.674.591 0 441.695l97.04 14.255L0 620.151h170.155V424.553c0-26.308 5.955-47.816 17.828-64.489 11.873-16.673 26.597-25.009 44.135-25.009 17.539 0 29.52 5.774 36.702 17.286 7.145 11.512 10.718 30.783 10.718 57.813v210.033H400V388.646c0-22.303-1.552-41.646-4.655-57.958l-.036-.036z"/></svg>
+  <div class="cover-inner">
+    <svg class="logo" viewBox="0 0 1093 449" fill="currentColor" role="img" aria-label="Homey"><path d="M400.57 203.206c-3.554-19.461-12.205-35.871-25.973-49.229-18.549-17.992-42.289-26.978-71.202-26.978-28.912 0-52.634 8.986-71.202 26.978-13.768 13.358-22.419 29.768-25.973 49.229v-3.163c0-11.498-.8-21.47-2.4-29.88-1.6-8.409-4.335-15.982-8.205-22.717-3.87-6.716-9.34-11.814-16.41-15.256-7.088-3.461-15.74-5.172-25.973-5.172-14.27 0-27.014 4.093-38.196 12.261-8.689 6.344-16.168 15.498-22.326 24.279L134.906 0 0 227.411l50.03 7.35L0 319.414h87.724v-100.84c0-13.563 3.07-24.652 9.19-33.248 6.122-8.595 13.713-12.893 22.755-12.893s15.219 2.977 18.921 8.912c3.684 5.935 5.526 15.87 5.526 29.806v108.282h62.104v-73.379c3.535 19.48 12.168 35.871 25.88 49.118 18.494 17.861 42.271 26.791 71.295 26.791s52.783-8.93 71.295-26.791c13.731-13.247 22.345-29.638 25.899-49.118v73.379h8.167v.26h53.918v-100.84c0-13.563 3.07-24.652 9.191-33.247 6.121-8.596 13.712-12.894 22.754-12.894 9.043 0 15.219 2.977 18.922 8.912 3.684 5.935 5.526 15.87 5.526 29.806v108.282h62.16v-100.84c0-13.564 3.07-24.652 9.191-33.248 6.121-8.595 13.712-12.893 22.754-12.893 9.042 0 15.219 2.977 18.921 8.912 3.684 5.935 5.526 15.87 5.526 29.805v108.283h62.104v-70.44c1.861 9.656 5.079 18.661 9.731 27.015 7.739 13.879 19.07 24.894 33.991 33.061 14.922 8.168 32.262 12.261 52.021 12.261 24.149 0 44.075-5.507 59.778-16.54 15.703-11.014 26.345-25.433 31.945-43.238l-57.099-13.08c-1.544 3.87-3.07 7.126-4.558 9.712-1.489 2.605-3.461 5.303-5.898 8.093-2.438 2.791-5.452 4.912-9.005 6.363-3.554 1.452-7.666 2.177-12.317 2.177-10.344 0-18.847-3.293-25.526-9.898-6.661-6.605-10.698-16.075-12.131-28.429h126.144v12.168c0 11.498.8 21.471 2.4 29.88 1.6 8.41 4.335 15.982 8.205 22.717 3.869 6.717 9.339 11.815 16.409 15.257 7.089 3.46 15.74 5.172 25.973 5.172 14.27 0 27.015-4.093 38.197-12.261 8.688-6.344 16.168-15.498 22.327-24.28L958.094 449 1093 221.588l-50.03-7.349 50.03-84.654h-87.72v100.841c0 13.563-3.07 24.651-9.194 33.247-6.122 8.596-13.713 12.893-22.755 12.893s-15.219-2.976-18.921-8.911c-3.684-5.936-5.526-15.871-5.526-29.806V129.567H886.78v80.151c-1.805-22.587-10.084-41.508-24.875-56.709-16.838-17.321-38.997-25.973-66.477-25.973-19.87 0-37.303 4.689-52.28 14.085-14.996 9.395-26.289 21.768-33.899 37.154-4.558 9.228-7.74 19.052-9.563 29.452v-7.367c0-11.499-.8-21.471-2.4-29.88-1.6-8.41-4.335-15.982-8.205-22.717-3.87-6.717-9.34-11.815-16.41-15.257-7.088-3.46-15.74-5.172-25.973-5.172-14.27 0-27.014 4.093-38.196 12.261-11.182 8.168-20.391 20.987-27.294 31.703l-1.805 3.051a164.53 164.53 0 00-.651-3.869c-1.6-8.41-4.335-15.982-8.205-22.717-3.87-6.717-9.34-11.815-16.41-15.257-7.088-3.46-15.74-5.172-25.972-5.172-14.271 0-27.015 4.093-38.197 12.261-11.182 8.168-20.391 20.987-27.294 31.703V129.79h-18.94l-43.164 73.472v-.056zm-97.175 70.421c-23.442 0-35.145-16.354-35.145-49.062s11.721-49.23 35.145-49.23c23.424 0 34.978 16.41 34.978 49.23 0 32.819-11.666 49.062-34.978 49.062zm459.4-72.133c2.623-8.967 6.623-15.87 12.037-20.707 5.414-4.838 11.926-7.275 19.536-7.275 8.205 0 14.865 2.512 19.982 7.535 5.116 5.024 8.391 11.833 9.805 20.447h-61.379.019z"/></svg>
+    <div>
+      <h1>Quoting on your phone</h1>
+      <p class="meta"><span>6 questions</span><i></i><span>About 3 minutes</span></p>
+    </div>
+  </div>
+</header>
+
+<div class="gutter">
+  <div class="wrap">
+    <section class="card" id="formCard">
+      <div class="progress" aria-hidden="true">
+        <div class="bar"><span id="barFill"></span></div>
+        <output id="progressText">0 of 6</output>
+      </div>
+
+      <form id="survey" novalidate>
+        <div class="block">
+          <div class="two">
+            <label class="field" for="name"><span>Your name</span><input type="text" id="name" name="name" autocomplete="name"></label>
+            <label class="field" for="agency"><span>Agency and branch</span><input type="text" id="agency" name="agency" autocomplete="organization"></label>
+          </div>
+        </div>
+
+        <fieldset class="block" data-q="g1">
+          <legend class="qhead"><span class="num">1</span><span class="qtitle">When did you last need to get a client a conveyancing quote while away from your desk?</span></legend>
+          <div class="qbody"><div class="options" id="g1"></div></div>
+        </fieldset>
+
+        <fieldset class="block" data-q="g2who">
+          <legend class="qhead"><span class="num">2</span><span class="qtitle">Who sends conveyancing quotes to your clients today?</span></legend>
+          <div class="qbody"><div class="options" id="g2who"></div></div>
+        </fieldset>
+
+        <fieldset class="block" data-q="g2self">
+          <legend class="qhead"><span class="num">3</span><span class="qtitle">If it took 3 minutes on your phone, would you send the quotes yourself?</span></legend>
+          <div class="qbody"><div class="options row" id="g2self"></div></div>
+        </fieldset>
+
+        <fieldset class="block" data-q="g3">
+          <legend class="qhead"><span class="num">4</span><span class="qtitle">To get each panel firm's quote and send it to your client, would you rather:</span></legend>
+          <div class="qbody">
+            <div class="options row" id="g3"></div>
+            <label class="field" for="g3why"><span>Why? (optional)</span><input type="text" id="g3why" name="g3why"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="block" data-q="g4">
+          <legend class="qhead"><span class="num">5</span><span class="qtitle">Which alerts would you act on? Pick any.</span></legend>
+          <div class="qbody"><div class="options" id="g4"></div></div>
+        </fieldset>
+
+        <fieldset class="block" data-q="g5">
+          <legend class="qhead"><span class="num">6</span><span class="qtitle">Would you change your referral fee for some clients?</span></legend>
+          <div class="qbody">
+            <div class="options" id="g5"></div>
+            <label class="field" for="g5how" id="g5howWrap"><span>When, and by how much? (optional)</span><input type="text" id="g5how" name="g5how"></label>
+          </div>
+        </fieldset>
+
+        <div class="block">
+          <label class="field" for="notes"><span>Anything else? (optional)</span><textarea id="notes" name="notes"></textarea></label>
+        </div>
+
+        <div class="trap" aria-hidden="true"><label for="website">Website</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+
+        <div class="foot">
+          <button type="submit" id="submitBtn">Done</button>
+          <span class="status" id="formStatus" aria-live="polite"></span>
+        </div>
+      </form>
+
+      <div class="thanks" id="done" hidden>
+        <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>
+          <h2 id="thanksTitle">Thank you</h2>
+          <p>Your answers are with the Homey team.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="brand">
+      <svg viewBox="0 0 1093 449" fill="currentColor" aria-hidden="true"><path d="M400.57 203.206c-3.554-19.461-12.205-35.871-25.973-49.229-18.549-17.992-42.289-26.978-71.202-26.978-28.912 0-52.634 8.986-71.202 26.978-13.768 13.358-22.419 29.768-25.973 49.229v-3.163c0-11.498-.8-21.47-2.4-29.88-1.6-8.409-4.335-15.982-8.205-22.717-3.87-6.716-9.34-11.814-16.41-15.256-7.088-3.461-15.74-5.172-25.973-5.172-14.27 0-27.014 4.093-38.196 12.261-8.689 6.344-16.168 15.498-22.326 24.279L134.906 0 0 227.411l50.03 7.35L0 319.414h87.724v-100.84c0-13.563 3.07-24.652 9.19-33.248 6.122-8.595 13.713-12.893 22.755-12.893s15.219 2.977 18.921 8.912c3.684 5.935 5.526 15.87 5.526 29.806v108.282h62.104v-73.379c3.535 19.48 12.168 35.871 25.88 49.118 18.494 17.861 42.271 26.791 71.295 26.791s52.783-8.93 71.295-26.791c13.731-13.247 22.345-29.638 25.899-49.118v73.379h8.167v.26h53.918v-100.84c0-13.563 3.07-24.652 9.191-33.247 6.121-8.596 13.712-12.894 22.754-12.894 9.043 0 15.219 2.977 18.922 8.912 3.684 5.935 5.526 15.87 5.526 29.806v108.282h62.16v-100.84c0-13.564 3.07-24.652 9.191-33.248 6.121-8.595 13.712-12.893 22.754-12.893 9.042 0 15.219 2.977 18.921 8.912 3.684 5.935 5.526 15.87 5.526 29.805v108.283h62.104v-70.44c1.861 9.656 5.079 18.661 9.731 27.015 7.739 13.879 19.07 24.894 33.991 33.061 14.922 8.168 32.262 12.261 52.021 12.261 24.149 0 44.075-5.507 59.778-16.54 15.703-11.014 26.345-25.433 31.945-43.238l-57.099-13.08c-1.544 3.87-3.07 7.126-4.558 9.712-1.489 2.605-3.461 5.303-5.898 8.093-2.438 2.791-5.452 4.912-9.005 6.363-3.554 1.452-7.666 2.177-12.317 2.177-10.344 0-18.847-3.293-25.526-9.898-6.661-6.605-10.698-16.075-12.131-28.429h126.144v12.168c0 11.498.8 21.471 2.4 29.88 1.6 8.41 4.335 15.982 8.205 22.717 3.869 6.717 9.339 11.815 16.409 15.257 7.089 3.46 15.74 5.172 25.973 5.172 14.27 0 27.015-4.093 38.197-12.261 8.688-6.344 16.168-15.498 22.327-24.28L958.094 449 1093 221.588l-50.03-7.349 50.03-84.654h-87.72v100.841c0 13.563-3.07 24.651-9.194 33.247-6.122 8.596-13.713 12.893-22.755 12.893s-15.219-2.976-18.921-8.911c-3.684-5.936-5.526-15.871-5.526-29.806V129.567H886.78v80.151c-1.805-22.587-10.084-41.508-24.875-56.709-16.838-17.321-38.997-25.973-66.477-25.973-19.87 0-37.303 4.689-52.28 14.085-14.996 9.395-26.289 21.768-33.899 37.154-4.558 9.228-7.74 19.052-9.563 29.452v-7.367c0-11.499-.8-21.471-2.4-29.88-1.6-8.41-4.335-15.982-8.205-22.717-3.87-6.717-9.34-11.815-16.41-15.257-7.088-3.46-15.74-5.172-25.973-5.172-14.27 0-27.014 4.093-38.196 12.261-11.182 8.168-20.391 20.987-27.294 31.703l-1.805 3.051a164.53 164.53 0 00-.651-3.869c-1.6-8.41-4.335-15.982-8.205-22.717-3.87-6.717-9.34-11.815-16.41-15.257-7.088-3.46-15.74-5.172-25.972-5.172-14.271 0-27.015 4.093-38.197 12.261-11.182 8.168-20.391 20.987-27.294 31.703V129.79h-18.94l-43.164 73.472v-.056zm-97.175 70.421c-23.442 0-35.145-16.354-35.145-49.062s11.721-49.23 35.145-49.23c23.424 0 34.978 16.41 34.978 49.23 0 32.819-11.666 49.062-34.978 49.062zm459.4-72.133c2.623-8.967 6.623-15.87 12.037-20.707 5.414-4.838 11.926-7.275 19.536-7.275 8.205 0 14.865 2.512 19.982 7.535 5.116 5.024 8.391 11.833 9.805 20.447h-61.379.019z"/></svg>
+    </footer>
+  </div>
+</div>
+<script src="config.js"></script>
+<script src="survey.js"></script>
+</body>
+</html>
