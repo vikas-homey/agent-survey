@@ -43,7 +43,12 @@ function buildOptions() {
 
 function read() {
   const fd = new FormData(form);
-  const r = { name: (fd.get("name") || "").trim(), agency: (fd.get("agency") || "").trim() };
+  const r = {
+    name: (fd.get("name") || "").trim(),
+    agency: (fd.get("agency") || "").trim(),
+    email: (fd.get("email") || "").trim(),
+    updates: fd.get("updates") === "yes",
+  };
   for (const [key, q] of Object.entries(Q)) r[key] = q.type === "checkbox" ? fd.getAll(key) : (fd.get(key) || "");
   for (const key of TEXT_FIELDS) r[key] = (fd.get(key) || "").trim();
   return r;
@@ -53,6 +58,8 @@ function write(r) {
   const f = form.elements;
   f.namedItem("name").value = r.name || "";
   f.namedItem("agency").value = r.agency || "";
+  f.namedItem("email").value = r.email || "";
+  f.namedItem("updates").checked = !!r.updates;
   for (const [key, q] of Object.entries(Q)) {
     form.querySelectorAll(`input[name="${key}"]`).forEach(el => {
       el.checked = q.type === "checkbox" ? (r[key] || []).includes(el.value) : r[key] === el.value;
@@ -97,6 +104,8 @@ function payload(r) {
     g5: textOf("g5", r.g5),
     g5how: r.g5 === "no" ? "" : r.g5how,
     notes: r.notes,
+    email: r.email,
+    updates: r.updates,
     website: form.elements.namedItem("website").value,
   };
   for (const [k, test] of Object.entries(GATES)) out[k] = test(r);
@@ -108,7 +117,10 @@ function loadDraft() { try { const s = localStorage.getItem(DRAFT_KEY); if (s) w
 function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
 
 function problem(r) {
+  const emailInput = form.elements.namedItem("email");
   if (!r.name) return { msg: "Add your name.", el: form.elements.namedItem("name") };
+  if (r.updates && !r.email) return { msg: "Add your email so we can tell you when the app goes live.", el: emailInput };
+  if (r.email && !emailInput.checkValidity()) return { msg: "Check your email address.", el: emailInput };
   for (const key of REQUIRED) {
     if (!isAnswered(r, key)) return { msg: "Answer every question from 1 to 6.", el: form.querySelector(`[data-q="${key}"]`) };
   }

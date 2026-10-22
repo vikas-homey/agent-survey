@@ -20,6 +20,9 @@ const COLUMNS = [
   ["G2 pass", r => r.g2Pass === true ? "Yes" : "No"],
   ["G3 pass", r => r.g3Pass === true ? "Yes" : "No"],
   ["G4 pass", r => r.g4Pass === true ? "Yes" : "No"],
+  // Added after launch: kept last so the G columns the Results formulas read stay at M–P.
+  ["Email", r => r.email],
+  ["Wants updates", r => r.updates === true ? "Yes" : "No"],
 ];
 const GATES = [
   ["G1", "Needed a quote away from the desk in the last 2 weeks", "M"],
@@ -32,11 +35,8 @@ const GATES = [
 function setup() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const responses = ss.getSheetByName(RESPONSES) || ss.getSheets()[0].setName(RESPONSES);
-  if (responses.getLastRow() === 0) {
-    responses.appendRow(COLUMNS.map(c => c[0]));
-    responses.setFrozenRows(1);
-    responses.getRange(1, 1, 1, COLUMNS.length).setFontWeight("bold");
-  }
+  responses.getRange(1, 1, 1, COLUMNS.length).setValues([COLUMNS.map(c => c[0])]).setFontWeight("bold");
+  responses.setFrozenRows(1);
 
   const results = ss.getSheetByName(RESULTS) || ss.insertSheet(RESULTS);
   results.clear();
@@ -83,7 +83,9 @@ function doPost(e) {
 
 function notify(r) {
   const me = Session.getEffectiveUser().getEmail();
-  const lines = COLUMNS.slice(1, 12).map(([label, value]) => `${label}: ${value(r) || "-"}`);
+  const lines = COLUMNS
+    .filter(([label]) => label !== "Received" && !/^G\d pass$/.test(label))
+    .map(([label, value]) => `${label}: ${value(r) || "-"}`);
   lines.push("", SpreadsheetApp.getActiveSpreadsheet().getUrl());
   MailApp.sendEmail(me, `Agent survey: ${r.name}${r.agency ? ` (${r.agency})` : ""}`, lines.join("\n"));
 }
