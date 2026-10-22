@@ -51,8 +51,7 @@ function setup() {
       `=IF(C${row}>=5,"Pass",IF(C${row}+MAX(8-D${row},0)<5,"Fail","Open"))`,
     ]);
   });
-  results.appendRow([]);
-  results.appendRow(["", "Pass is 5 of 8."]);
+  results.getRange(GATES.length + 3, 2).setValue("Pass is 5 of 8.");
   results.getRange(1, 1, 1, 5).setFontWeight("bold");
   results.setFrozenRows(1);
   results.autoResizeColumns(1, 5);
