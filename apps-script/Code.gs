@@ -20,7 +20,7 @@ const COLUMNS = [
   ["G2 pass", r => r.g2Pass === true ? "Yes" : "No"],
   ["G3 pass", r => r.g3Pass === true ? "Yes" : "No"],
   ["G4 pass", r => r.g4Pass === true ? "Yes" : "No"],
-  // Added after launch: kept last so the G columns the Results formulas read stay at M–P.
+  // Kept last so the G columns the Results formulas read stay at M–P.
   ["Email", r => r.email],
   ["Wants updates", r => r.updates === true ? "Yes" : "No"],
 ];
